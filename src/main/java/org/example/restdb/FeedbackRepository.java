@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface FeedbackRepository extends CrudRepository<FeedbackData, Long> {
     List<FeedbackData> findByProductName(String productName);
     List<FeedbackData> findByContent(String content);
-    Optional<FeedbackData> getById(long id);
+    Optional<FeedbackData> findById(long id);
 }
