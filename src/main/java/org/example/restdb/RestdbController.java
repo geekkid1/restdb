@@ -10,25 +10,25 @@ import java.util.List;
 @RestController
 public class RestdbController {
     private final AtomicLong counter = new AtomicLong();
-    @Autowired FeedbackRepository repo;
+    @Autowired FeedbackService fs;
 
     @PostMapping("/submit")
-    public void submit(@RequestBody FeedbackData fb) {
-        repo.save(fb);
+    public void submit(@RequestParam(name = "product_name", defaultValue = "N/A") String pn, @RequestParam(name = "content") String c) {
+        fs.save(new FeedbackData(pn, c));
     }
 
     @GetMapping("/product/{product}")
     public List<FeedbackData> product(@PathVariable String product) {
-        return repo.findByProductName(product);
+        return fs.byProduct(product);
     }
 
     @GetMapping("/id/{id}")
     public Optional<FeedbackData> id(@PathVariable long id) {
-        return repo.findById(id);
+        return fs.byId(id);
     }
 
     @GetMapping("/all")
     public List<FeedbackData> all() {
-        return (List<FeedbackData>) repo.findAll();
+        return fs.all();
     }
 }
