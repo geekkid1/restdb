@@ -13,26 +13,21 @@ public class RestdbController {
     private final AtomicLong counter = new AtomicLong();
     @Autowired FeedbackService fs;
 
-    /*@PostMapping("/submit")
-    public void submit(@RequestParam(name = "product_name", defaultValue = "N/A") String pn, @RequestParam(name = "content") String c) {
-        fs.save(new FeedbackData(pn, c));
-    }*/
-
-    @PostMapping("/jacksubmit")
-    public void jackSubmit(@RequestBody MarshalledFeedbackData mfd) {
+    @PostMapping("/submit")
+    public void submit(@RequestBody MarshalledFeedbackData mfd) {
         for(Map.Entry<String, String> entry : mfd.metaData.entrySet()) {
             System.out.println(entry.getKey() + " : " + entry.getValue());
         }
         fs.save(new FeedbackData(mfd.getProductName(), mfd.getContent(), mfd.metaData));
     }
 
-    @GetMapping("/product/{product}")
-    public List<FeedbackData> product(@PathVariable String product) {
+    @GetMapping("/product")
+    public List<FeedbackData> product(@RequestParam String product) {
         return fs.byProduct(product);
     }
 
-    @GetMapping("/id/{id}")
-    public Optional<FeedbackData> id(@PathVariable long id) {
+    @GetMapping("/id")
+    public Optional<FeedbackData> id(@RequestParam long id) {
         return fs.byId(id);
     }
 
