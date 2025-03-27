@@ -24,4 +24,6 @@ public class FeedbackService {
     public List<FeedbackData> all() {
         return (List<FeedbackData>) repo.findAll();
     }
+
+    public List<FeedbackData> getByDate(String date) { return repo.findByDate(date); }
 }

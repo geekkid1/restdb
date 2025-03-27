@@ -14,7 +14,7 @@ public class RestdbController {
     @Autowired FeedbackService fs;
 
     @PostMapping("/submit")
-    public void submit(@RequestBody MarshalledFeedbackData mfd) {
+    public void submit(@RequestBody GeneralizedFeedbackData mfd) {
         for(Map.Entry<String, String> entry : mfd.metaData.entrySet()) {
             System.out.println(entry.getKey() + " : " + entry.getValue());
         }
@@ -34,5 +34,10 @@ public class RestdbController {
     @GetMapping("/all")
     public List<FeedbackData> all() {
         return fs.all();
+    }
+
+    @GetMapping("/date")
+    public List<FeedbackData> byDate(@RequestParam String date) {
+        return fs.getByDate(date);
     }
 }
