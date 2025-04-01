@@ -26,4 +26,7 @@ public class FeedbackService {
     }
 
     public List<FeedbackData> getByDate(String date) { return repo.findByDate(date); }
+
+    // FOR DEBUG PURPOSES ONLY, DO NOT HOOK UP TO PRODUCTION ENDPOINT
+    public void deleteAll() { repo.deleteAll(); }
 }

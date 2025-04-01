@@ -14,6 +14,4 @@ public interface FeedbackRepository extends CrudRepository<FeedbackData, Long> {
     @Query("select f from FeedbackData f where f.metaData['date'] = :date")
     List<FeedbackData> findByDate(String date);
 
-    @Query("select key(entry) from FeedbackData f join f.metaData as entry")
-    List<String> getMetadata();
 }
