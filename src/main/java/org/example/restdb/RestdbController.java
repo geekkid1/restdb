@@ -22,6 +22,11 @@ public class RestdbController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nfd);
     }
 
+    @GetMapping("/ping")
+    public ResponseEntity<?> ping() {
+        return ResponseEntity.status(HttpStatus.OK).body("Pong");
+    }
+
     @GetMapping("/product")
     public List<FeedbackData> product(@RequestParam String product) {
         return fs.byProduct(product);
@@ -42,13 +47,9 @@ public class RestdbController {
         return fs.getByDate(date);
     }
 
-    @DeleteMapping("/delall")
-    public ResponseEntity<?> delAll(@RequestParam String auth) {
-        if(auth.equals("tHiSdUmMyAuTh")) {
-            fs.deleteAll();
-            return ResponseEntity.status(HttpStatus.OK).body("Deleted");
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Forbidden");
-        }
+    @DeleteMapping("/del")
+    public ResponseEntity<?> delAll(@RequestParam long id) {
+        fs.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Deleted");
     }
 }
