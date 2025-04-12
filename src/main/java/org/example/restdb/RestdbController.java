@@ -22,6 +22,12 @@ public class RestdbController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nfd);
     }
 
+    @PutMapping("/edit")
+    public ResponseEntity<?> edit(@RequestBody FeedbackData fd) {
+        fs.save(fd);
+        return ResponseEntity.status(HttpStatus.OK).body(fd);
+    }
+
     @GetMapping("/ping")
     public ResponseEntity<?> ping() {
         return ResponseEntity.status(HttpStatus.OK).body("Pong");
