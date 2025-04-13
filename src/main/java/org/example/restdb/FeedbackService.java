@@ -9,6 +9,7 @@ import java.util.Optional;
 @Service
 public class FeedbackService {
     @Autowired FeedbackRepository repo;
+    @Autowired UserRepo ur;
 
     public void save(FeedbackData fb) {
         repo.save(fb);
@@ -29,5 +30,11 @@ public class FeedbackService {
 
     public void delete(long id) {
         repo.deleteById(id);
+    }
+
+    public void associate(long id, long uid) {
+        UserData ud = ur.findById(uid).get();
+        repo.updateAuthorById(id, ud);
+        //repo.associate(id, uid);
     }
 }

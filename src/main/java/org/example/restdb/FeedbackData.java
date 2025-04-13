@@ -1,5 +1,6 @@
 package org.example.restdb;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
@@ -21,6 +22,12 @@ public class FeedbackData {
     @JsonProperty("metadata")
     @ElementCollection
     Map<String,String> metaData;
+
+    @JsonIncludeProperties("id")
+    @JsonProperty("user_data")
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    UserData author;
 
     public FeedbackData() {}
     public FeedbackData(String pn, String c, Map<String,String> md) {

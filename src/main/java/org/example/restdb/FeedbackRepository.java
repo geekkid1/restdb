@@ -1,5 +1,7 @@
 package org.example.restdb;
 
+import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -13,5 +15,13 @@ public interface FeedbackRepository extends CrudRepository<FeedbackData, Long> {
 
     @Query("select f from FeedbackData f where f.metaData['date'] = :date")
     List<FeedbackData> findByDate(String date);
+
+    @Query("UPDATE FeedbackData SET author=:uid WHERE id=:id")
+    void associate(long id, long uid);
+
+    @Transactional
+    @Modifying(flushAutomatically = true)
+    @Query("UPDATE FeedbackData SET author=:author WHERE id=:id")
+    void updateAuthorById(long id, UserData author);
 
 }

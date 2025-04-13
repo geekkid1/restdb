@@ -15,6 +15,15 @@ public class RestdbController {
     private final AtomicLong counter = new AtomicLong();
     @Autowired FeedbackService fs;
 
+    @GetMapping("/ping")
+    public ResponseEntity<?> ping() {
+        return ResponseEntity.status(HttpStatus.OK).body("Pong");
+    }
+
+    // ========================
+    // == FEEDBACK ENDPOINTS ==
+    // ========================
+
     @PostMapping("/submit")
     public ResponseEntity<?> submit(@RequestBody GeneralizedFeedbackData mfd) {
         FeedbackData nfd = new FeedbackData(mfd.getProductName(), mfd.getContent(), mfd.metaData);
@@ -28,11 +37,6 @@ public class RestdbController {
         return ResponseEntity.status(HttpStatus.OK).body(fd);
     }
 
-    @GetMapping("/ping")
-    public ResponseEntity<?> ping() {
-        return ResponseEntity.status(HttpStatus.OK).body("Pong");
-    }
-
     @GetMapping("/product")
     public List<FeedbackData> product(@RequestParam String product) {
         return fs.byProduct(product);
@@ -40,7 +44,11 @@ public class RestdbController {
 
     @GetMapping("/id")
     public Optional<FeedbackData> id(@RequestParam long id) {
-        return fs.byId(id);
+        Optional<FeedbackData> output = fs.byId(id);
+        if(output.isPresent()) {
+            System.out.println(output.get().author.name);
+        }
+        return output;
     }
 
     @GetMapping("/all")
@@ -57,5 +65,29 @@ public class RestdbController {
     public ResponseEntity<?> delAll(@RequestParam long id) {
         fs.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Deleted");
+    }
+
+    // ====================
+    // == USER ENDPOINTS ==
+    // ====================
+
+    @Autowired UserService us;
+
+    @PostMapping("/users/create")
+    public Optional<UserData> createUser(@RequestBody InputUserData ud) {
+        return us.createUser(ud.name, ud.email);
+    }
+
+    @GetMapping("/users/id")
+    public Optional<UserData> getUserById(@RequestParam long id) { return us.getUserById(id);  }
+
+    @GetMapping("/users/all")
+    public List<UserData> allUsers() {
+        return us.getAll();
+    }
+
+    @PutMapping("/users/associate")
+    public void associate(@RequestParam long feedback_id, @RequestParam long user_id) {
+        fs.associate(feedback_id, user_id);
     }
 }
