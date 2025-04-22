@@ -45,9 +45,7 @@ public class RestdbController {
     @GetMapping("/id")
     public Optional<FeedbackData> id(@RequestParam long id) {
         Optional<FeedbackData> output = fs.byId(id);
-        if(output.isPresent()) {
-            System.out.println(output.get().author.name);
-        }
+
         return output;
     }
 
