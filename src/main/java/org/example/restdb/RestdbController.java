@@ -72,7 +72,7 @@ public class RestdbController {
     @Autowired UserService us;
 
     @PostMapping("/users/create")
-    public Optional<UserData> createUser(@RequestBody InputUserData ud) {
+    public UserData createUser(@RequestBody InputUserData ud) {
         return us.createUser(ud.name, ud.email);
     }
 

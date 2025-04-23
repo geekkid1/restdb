@@ -11,9 +11,10 @@ import java.util.Optional;
 public class UserService {
     @Autowired UserRepo ur;
 
-    public Optional<UserData> createUser(String name, String email) {
-        ur.save(new UserData(name, email));
-        return ur.findByName(name);
+    public UserData createUser(String name, String email) {
+        UserData ud = new UserData(name, email);
+        ur.save(ud);
+        return ud;
     }
 
     public Optional<UserData> getUserById(long id) {
