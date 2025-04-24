@@ -88,4 +88,21 @@ public class RestdbController {
     public void associate(@RequestParam long feedback_id, @RequestParam long user_id) {
         fs.associate(feedback_id, user_id);
     }
+
+    // ======================
+    // == FILTER ENDPOINTS ==
+    // ======================
+
+    @Autowired FilterService fts;
+
+    @GetMapping("/filter/{product}")
+    public FilterData getFD(@PathVariable String product) {
+        return fts.getForProduct(product);
+    }
+
+    @PostMapping("/filter")
+    public FilterData upFD(@RequestBody FilterData fd) {
+        return fts.updateFilterData(fd);
+    }
+
 }
