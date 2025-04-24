@@ -2,9 +2,14 @@ package org.example.restdb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@NoArgsConstructor
+@Getter
 @Entity
 public class UserData {
     @Id
@@ -19,10 +24,5 @@ public class UserData {
         this.name = name;
         this.email = email;
     }
-    public UserData() {}
 
-    public long getId() { return id; }
-    public String getName() { return name; }
-    public String getEmail() { return email; }
-    public List<FeedbackData> getFeedbackData() { return feedbackData; }
 }
