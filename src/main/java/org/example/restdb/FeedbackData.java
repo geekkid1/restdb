@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.Map;
  * because I needed to annotate metaData with @ElementCollection to make it work with JPA.
  */
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class FeedbackData {

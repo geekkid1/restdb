@@ -12,10 +12,18 @@ public class FeedbackService {
     @Autowired UserRepo ur;
 
     public void save(FeedbackData fb) {
+        if(fb.getProductName() == null || fb.getProductName().isEmpty() || fb.getProductName().equalsIgnoreCase("all")) {
+            fb.setProductName("all");
+        }
         repo.save(fb);
     }
+
     public List<FeedbackData> byProduct(String product) {
-        return repo.findByProductName(product);
+        if(product == null || product.isEmpty() || product.equalsIgnoreCase("all")) {
+            return repo.findByProductName("all");
+        } else {
+            return repo.findByProductName(product);
+        }
     }
 
     public Optional<FeedbackData> byId(long id) {
