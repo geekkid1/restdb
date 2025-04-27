@@ -16,4 +16,5 @@ public class FilterData {
     @Id
     String product;
     char len;
+    char bp;
 }

@@ -12,7 +12,7 @@ public class FilterService {
     public FilterData getForProduct(String product) {
         Optional<FilterData> ofd = fr.findById(product);
         if(ofd.isEmpty()) {
-            FilterData ret = new FilterData(product, 'A');
+            FilterData ret = new FilterData(product, 'A', 'A');
             fr.save(ret);
             return ret;
         }
